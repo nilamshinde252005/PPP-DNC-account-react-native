@@ -9,9 +9,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 // Import Screens
-// import HomeScreen from '../MyComponent'
-import HomeScreen from '../homeScreen/HomeScreen'
-import RegisterScreen from '../registerScreen/RegisterScreen'
+import HomeScreen from '../MyComponent';
 import SettingsScreen from '../settingsScreen/SettingsScreen';
 import CustomSidebarMenu from '../customerSidebarMenu/CustomSidebarMenu';
 import NavigationDrawerHeader from '../navigationDrawerHeader/NavigationDrawerHeader';
@@ -26,24 +24,7 @@ const homeScreenStack = ({navigation}) => {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          title: 'Home', //Set Header Title
-          headerLeft: () => (
-            <NavigationDrawerHeader navigationProps={navigation} />
-          ),
-          headerStyle: {
-            backgroundColor: '#307ecc', //Set Header color
-          },
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-          },
-        }}
-      />
-      <Stack.Screen
-        name="RegisterScreen"
-        component={RegisterScreen}
-        options={{
-          title: 'Register', //Set Header Title
+          title: 'Home SCREEN', //Set Header Title
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
@@ -99,8 +80,7 @@ const DrawerNavigatorRoutes = (props) => {
         },
       }}
       screenOptions={{headerShown: false}}
-      drawerContent={CustomSidebarMenu}
-      >
+      drawerContent={CustomSidebarMenu}>
       <Drawer.Screen
         name="homeScreenStack"
         options={{drawerLabel: 'Home Screen'}}

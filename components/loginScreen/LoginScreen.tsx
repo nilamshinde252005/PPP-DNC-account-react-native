@@ -4,14 +4,14 @@
 // Import React and Component
 import React, {useState, createRef} from 'react';
 import {
+  Text,
   StyleSheet,
   TextInput,
   View,
-  Text,
   ScrollView,
-  Image,
   Keyboard,
   TouchableOpacity,
+  Image,
   KeyboardAvoidingView,
 } from 'react-native';
 
@@ -27,6 +27,11 @@ const LoginScreen = ({navigation}) => {
   const passwordInputRef = createRef();
 
   const handleSubmitPress = () => {
+    //set login success for now
+    AsyncStorage.setItem('user_id', 'test@gmail.com');
+    navigation.replace('DrawerNavigationRoutes');
+    return
+    //
     setErrortext('');
     if (!userEmail) {
       alert('Please fill Email');
@@ -46,7 +51,9 @@ const LoginScreen = ({navigation}) => {
     }
     formBody = formBody.join('&');
 
-    fetch('http://localhost:3000/api/user/login', {
+    const loginUrl = 'http://127.0.0.1:5001/ppp-dnc-account/us-central1/app/users'
+
+    fetch('http://localhost:3000/users/login', {
       method: 'POST',
       body: formBody,
       headers: {
