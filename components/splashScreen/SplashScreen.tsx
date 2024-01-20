@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from '../loader/Loader';
 
 const SplashScreen = ({navigation}) => {
   //State for ActivityIndicator animation
@@ -22,6 +23,7 @@ const SplashScreen = ({navigation}) => {
       //Check if user_id is set or not
       //If not then send for Authentication
       //else send to Home Screen
+      console.log('inside SPLASH')
       AsyncStorage.getItem('user_id').then((value) =>
         navigation.replace(
           value === null ? 'Auth' : 'DrawerNavigationRoutes'

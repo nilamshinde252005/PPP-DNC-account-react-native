@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import Loader from '../loader/Loader';
 
 const RegisterScreen = (props) => {
   const [userName, setUserName] = useState('');
@@ -132,6 +133,7 @@ const RegisterScreen = (props) => {
   }
   return (
     <View style={{flex: 1, backgroundColor: '#307ecc'}}>
+      <Loader loading={loading} />
       <ScrollView
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{

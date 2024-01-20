@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from '../loader/Loader';
 
 const LoginScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
@@ -78,6 +79,7 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <View style={styles.mainBody}>
+      <Loader loading={loading} />
       <ScrollView
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
