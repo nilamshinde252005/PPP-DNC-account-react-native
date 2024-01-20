@@ -9,7 +9,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 // Import Screens
-import HomeScreen from '../MyComponent';
+import HomeScreen from '../homeScreen/HomeScreen';
 import SettingsScreen from '../settingsScreen/SettingsScreen';
 import CustomSidebarMenu from '../customerSidebarMenu/CustomSidebarMenu';
 import NavigationDrawerHeader from '../navigationDrawerHeader/NavigationDrawerHeader';
@@ -24,7 +24,7 @@ const homeScreenStack = ({navigation}) => {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          title: 'Home SCREEN', //Set Header Title
+          title: 'Home', //Set Header Title
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
@@ -68,7 +68,7 @@ const settingScreenStack = ({navigation}) => {
   );
 };
 
-const DrawerNavigatorRoutes = (props) => {
+const DrawerNavigationRoutes = (props) => {
   return (
     <Drawer.Navigator
       drawerContentOptions={{
@@ -95,4 +95,4 @@ const DrawerNavigatorRoutes = (props) => {
   );
 };
 
-export default DrawerNavigatorRoutes;
+export default DrawerNavigationRoutes;

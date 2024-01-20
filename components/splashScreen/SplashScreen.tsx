@@ -26,7 +26,7 @@ const SplashScreen = ({navigation}) => {
       console.log('inside SPLASH', navigation)
       AsyncStorage.getItem('user_id').then((value) =>
         navigation.replace(
-          value === null ? 'Auth' : 'HomeScreen'
+          value === null ? 'Auth' : 'DrawerNavigationRoutes'
         ),
       );
     }, 5000);
