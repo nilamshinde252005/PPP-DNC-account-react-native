@@ -7,7 +7,8 @@ import {
   ActivityIndicator,
   View,
   StyleSheet,
-  Image
+  Image,
+  Text
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -19,16 +20,11 @@ const SplashScreen = ({navigation}) => {
 
   useEffect(() => {
     setTimeout(() => {
-      setAnimating(false);
-      //Check if user_id is set or not
-      //If not then send for Authentication
-      //else send to Home Screen
-      console.log('inside SPLASH', navigation)
-      AsyncStorage.getItem('user_id').then((value) =>
-        navigation.replace(
-          value === null ? 'Auth' : 'DrawerNavigationRoutes'
-        ),
-      );
+    setAnimating(false);
+    console.log('inside SPLASH', navigation)
+      
+    navigation.replace('Auth')  
+      
     }, 5000);
   }, []);
 
@@ -38,7 +34,7 @@ const SplashScreen = ({navigation}) => {
         source={require('../../assets/icon.png')}
         style={{width: '90%', resizeMode: 'contain', margin: 30}}
       /> */}
-      <Image
+        <Image
             source={require('../../assets/icon.png')}
             style={{
                 width: '50%',
@@ -47,12 +43,21 @@ const SplashScreen = ({navigation}) => {
                 margin: 30,
             }}
             />
-      <ActivityIndicator
-        animating={animating}
-        color="#FFFFFF"
-        size="large"
-        style={styles.activityIndicator}
-      />
+        <Text
+            style={{
+                width: '50%',
+                height: 100,
+                resizeMode: 'contain',
+                margin: 30,
+            }}>
+            PPP DNC Account by PMC
+        </Text>
+        <ActivityIndicator
+            animating={animating}
+            color="#FFFFFF"
+            size="large"
+            style={styles.activityIndicator}
+        />
     </View>
   );
 };
