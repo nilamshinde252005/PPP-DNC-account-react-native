@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { View } from "react-native";
+import { Platform, SafeAreaView, View } from "react-native";
 import { makeStyles, Text, Button, useThemeMode, ThemeProvider } from "@rneui/themed";
 import { SnapshotOptions } from "firebase/firestore";
 import LoginScreen from './components/loginScreen/LoginScreen'
@@ -8,18 +8,44 @@ import SplashScreen from './components/splashScreen/SplashScreen'
 import RegisterScreen from './components/registerScreen/RegisterScreen'
 import AsyncStorage from '@react-native-community/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
+<<<<<<< HEAD
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import DrawerNavigationRoutes from './components/drawerNavigationRoutes/DrawerNavigationRoutes';
 import packageScreen from './components/packageScreen/packageScreen'
 import CreditNotePackageScreen from './components/CreditNotePackageScreen/CreditNotePackageScreen'
 
+=======
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import SettingsScreen from './components/settingsScreen/SettingsScreen';
+import PackageScreen from './components/packageScreen/PackageScreen';
+import CreditNoteScreen from './components/creditNoteScreen/CreditNoteScreen';
+import ReportScreen from './components/reportScreen/ReportScreen';
+import HomeTabNavigator from "./HomeTabNavigator";
+>>>>>>> 46e17a9ee8fafca713f157450cfea01d535b26b4
 
+const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+const screenOptions = {
+  tabBarShowLabel:false,
+  headerShown:false,
+  tabBarStyle:{
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    left: 0,
+    elevation: 0,
+    height: 60,
+    background: "#fff"
+  }
+}
 
 const Auth = (navigation) => {
   // Stack Navigator for Login and Sign up Screen
-  console.log('auth', navigation)
+  console.log('Inside Auth(): ', navigation)
   return (
     <Stack.Navigator initialRouteName="LoginScreen">
       <Stack.Screen
@@ -51,6 +77,11 @@ const Auth = (navigation) => {
           },
         }}
       />
+      <Stack.Screen
+          name="HomeNav"
+          options={{headerShown: false}}
+          component={HomeTabNavigator}
+      />
     </Stack.Navigator>
   );
 };
@@ -59,6 +90,7 @@ export default function App() {
   const { setMode, mode } = useThemeMode();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<SnapshotOptions | undefined>(undefined);
+  const [token, setToken] = useState(null);
 
   const handleOnPress = () => {
     setMode(mode === "dark" ? "light" : "dark");
@@ -71,33 +103,39 @@ export default function App() {
   }
 
   useEffect(() => {
-    console.log('here:');
+    // const tokenValue = AsyncStorage.getItem("token");
+    
+    AsyncStorage.getItem("token").then((value) => {
+      console.log('Inside App.tsx useEffect() -> ' + JSON.stringify(value));
+      console.log('!token value ->' + !value);
+      setToken(value);
+    })
+      
   }, []);
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SplashScreen">
-        {/* SplashScreen which will come once for 5 Seconds */}
-        <Stack.Screen
-          name="SplashScreen"
-          component={SplashScreen}
-          // Hiding header for Splash Screen
-          options={{headerShown: false}}
-        />
-        {/* Auth Navigator: Include Login and Signup */}
-        <Stack.Screen
-          name="Auth"
-          component={Auth}
-          options={{headerShown: false}}
-        />
-        {/* Navigation Drawer as a landing page */}
-        <Stack.Screen
-          name="DrawerNavigationRoutes"
-          component={DrawerNavigationRoutes}
-          // Hiding header for Navigation Drawer
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
+      <Stack.Navigator 
+      screenOptions={{
+      headerShown: false
+      }}>
+    {
+        !token ?
+        <Stack.Group>
+            <Stack.Screen 
+               name="auth" 
+               component={Auth}
+            />
+        </Stack.Group>
+        :
+        <Stack.Group>
+            <Stack.Screen
+               name="HomeNav"
+               component={HomeTabNavigator}
+            />
+        </Stack.Group>
+    }
+    </Stack.Navigator>
     </NavigationContainer>
   );
 }

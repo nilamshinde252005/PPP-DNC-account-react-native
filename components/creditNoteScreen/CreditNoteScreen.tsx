@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native";
 
-const PackageScreen = () => {
+const CreditNoteScreen = () => {
     const user = {};
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -9,4 +9,4 @@ const PackageScreen = () => {
     );
 };
 
-export default PackageScreen;
+export default CreditNoteScreen;

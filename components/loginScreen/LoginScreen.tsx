@@ -17,6 +17,7 @@ import {
 
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../loader/Loader';
+import styles from '../styles';
 
 const LoginScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
@@ -27,10 +28,11 @@ const LoginScreen = ({navigation}) => {
   const passwordInputRef = createRef();
 
   const handleSubmitPress = () => {
+    console.log("inside handleSubmitPress");
     //set login success for now
-    AsyncStorage.setItem('user_id', 'test@gmail.com');
-    navigation.replace('DrawerNavigationRoutes');
-    return
+    //AsyncStorage.setItem('token', 'RANDOM_TOKEN');
+    //navigation.navigate('HomeNav');
+    //return
     //
     setErrortext('');
     if (!userEmail) {
@@ -53,7 +55,7 @@ const LoginScreen = ({navigation}) => {
 
     const loginUrl = 'http://127.0.0.1:5001/ppp-dnc-account/us-central1/app/users'
 
-    fetch('http://localhost:3000/users/login', {
+    fetch('http://127.0.0.1:5001/ppp-dnc-account/us-central1/app/login', {
       method: 'POST',
       body: formBody,
       headers: {
@@ -64,14 +66,13 @@ const LoginScreen = ({navigation}) => {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        //Hide Loader
+        // Hide Loader
         setLoading(false);
         console.log(responseJson);
-        // If server response message same as Data Matched
-        if (responseJson.status === 'success') {
-          AsyncStorage.setItem('user_id', responseJson.data.email);
-          console.log(responseJson.data.email);
-          navigation.replace('DrawerNavigationRoutes');
+        if (responseJson.stsTokenManager?.accessToken) {
+          // AsyncStorage.setItem('user_id', responseJson.data.email);
+          AsyncStorage.setItem('token', responseJson.stsTokenManager?.accessToken);
+          navigation.navigate('HomeNav');
         } else {
           setErrortext(responseJson.msg);
           console.log('Please check your email id or password');
@@ -100,13 +101,17 @@ const LoginScreen = ({navigation}) => {
               <Image
                 source={require('../../assets/icon.png')}
                 style={{
-                  width: '50%',
-                  height: 100,
+                  width: '100%',
+                  height: 200,
                   resizeMode: 'contain',
                   margin: 30,
                 }}
               />
             </View>
+            <Text
+            style={styles.titleTextStyle}>
+            PPP DNC Account by PMC
+        </Text>
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
@@ -166,60 +171,3 @@ const LoginScreen = ({navigation}) => {
   );
 };
 export default LoginScreen;
-
-const styles = StyleSheet.create({
-  mainBody: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#307ecc',
-    alignContent: 'center',
-  },
-  SectionStyle: {
-    flexDirection: 'row',
-    height: 40,
-    marginTop: 20,
-    marginLeft: 35,
-    marginRight: 35,
-    margin: 10,
-  },
-  buttonStyle: {
-    backgroundColor: '#7DE24E',
-    borderWidth: 0,
-    color: '#FFFFFF',
-    borderColor: '#7DE24E',
-    height: 40,
-    alignItems: 'center',
-    borderRadius: 30,
-    marginLeft: 35,
-    marginRight: 35,
-    marginTop: 20,
-    marginBottom: 25,
-  },
-  buttonTextStyle: {
-    color: '#FFFFFF',
-    paddingVertical: 10,
-    fontSize: 16,
-  },
-  inputStyle: {
-    flex: 1,
-    color: 'white',
-    paddingLeft: 15,
-    paddingRight: 15,
-    borderWidth: 1,
-    borderRadius: 30,
-    borderColor: '#dadae8',
-  },
-  registerTextStyle: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 14,
-    alignSelf: 'center',
-    padding: 10,
-  },
-  errorTextStyle: {
-    color: 'red',
-    textAlign: 'center',
-    fontSize: 14,
-  },
-});
