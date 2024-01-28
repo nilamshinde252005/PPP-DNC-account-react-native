@@ -32,7 +32,7 @@ export default StyleSheet.create({
         marginRight: 30,
         marginTop: 20,
         height: 48,
-        borderRadius: 5,
+        borderRadius: 15,
         alignItems: "center",
         justifyContent: 'center'
     },

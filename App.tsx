@@ -11,6 +11,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import DrawerNavigationRoutes from './components/drawerNavigationRoutes/DrawerNavigationRoutes';
+import packageScreen from './components/packageScreen/packageScreen'
+import CreditNotePackageScreen from './components/CreditNotePackageScreen/CreditNotePackageScreen'
+
 
 const Stack = createStackNavigator();
 
@@ -21,9 +24,19 @@ const Auth = (navigation) => {
     <Stack.Navigator initialRouteName="LoginScreen">
       <Stack.Screen
         name="LoginScreen"
-        component={LoginScreen}
+        component={packageScreen}
         options={{headerShown: false}}
       />
+
+//addednilam
+
+      <Stack.Screen
+        name="LoginScreen"
+        component={CreditNotePackageScreen}
+        options={{headerShown: false}}
+      />
+
+
       <Stack.Screen
         name="RegisterScreen"
         component={RegisterScreen}
